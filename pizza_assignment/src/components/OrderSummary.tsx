@@ -1,4 +1,19 @@
-function OrderSummary({ summary }) {
+interface SummaryType {
+  customerName: string;
+  phone: string;
+  size: string;
+  quantity: number;
+  extraCheese: boolean;
+  deliveryOption: string;
+  address: string;
+  pizzaSubtotal: number;
+  cheeseCost: number;
+  deliveryFee: number;
+  tax: string;
+  total: string;
+}
+
+function OrderSummary({ summary }: { summary: SummaryType }) {
   return (
     <div className="summary-container">
       <h2>Order Summary</h2>

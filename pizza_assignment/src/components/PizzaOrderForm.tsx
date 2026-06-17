@@ -1,23 +1,30 @@
 import { useState } from "react";
 
-function PizzaOrderForm({ setOrderSummary }) {
+interface PizzaOrderFormProps {
+  setOrderSummary: (summary: any) => void;
+}
+
+type PizzaSize = "Small" | "Medium" | "Large" | "Extra Large";
+
+
+function PizzaOrderForm({ setOrderSummary }: PizzaOrderFormProps) {
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
-  const [size, setSize] = useState("Medium");
+  const [size, setSize] = useState<PizzaSize>("Medium");
   const [quantity, setQuantity] = useState(1);
   const [extraCheese, setExtraCheese] = useState(false);
   const [deliveryOption, setDeliveryOption] = useState("Pickup");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
 
-  const pizzaPrices = {
+  const pizzaPrices: Record<PizzaSize, number> = {
     Small: 8,
     Medium: 10,
     Large: 12,
     "Extra Large": 15,
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validation
@@ -68,18 +75,18 @@ function PizzaOrderForm({ setOrderSummary }) {
       <input
         type="text"
         value={customerName}
-        onChange={(e) => setCustomerName(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCustomerName(e.target.value)}
       />
 
       <label>Phone Number:</label>
       <input
         type="text"
         value={phone}
-        onChange={(e) => setPhone(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
       />
 
       <label>Pizza Size:</label>
-      <select value={size} onChange={(e) => setSize(e.target.value)}>
+      <select value={size} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSize(e.target.value as PizzaSize)}>
         <option>Small</option>
         <option>Medium</option>
         <option>Large</option>
@@ -91,14 +98,14 @@ function PizzaOrderForm({ setOrderSummary }) {
         type="number"
         min="1"
         value={quantity}
-        onChange={(e) => setQuantity(Number(e.target.value))}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuantity(Number(e.target.value))}
       />
 
       <label>
         <input
           type="checkbox"
           checked={extraCheese}
-          onChange={(e) => setExtraCheese(e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setExtraCheese(e.target.checked)}
         />
         Extra Cheese (+$2 per pizza)
       </label>
@@ -118,7 +125,7 @@ function PizzaOrderForm({ setOrderSummary }) {
           <input
             type="text"
             value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddress(e.target.value)}
           />
         </>
       )}
